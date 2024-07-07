@@ -1,0 +1,62 @@
+class MCPNeuron:
+    def __init__(self, n_inputs, w=None, threshold=0):
+        if w is None:
+            self.w = np.zeros(n_inputs)
+        else:
+            assert len(self.w) == n_inputs, "Error, number of inputs must be the same as the number of weights."
+            self.w = w
+        self.threshold = threshold
+
+    # P2.1 - Implement a forward-pass function for a simple MCP neuron
+    def forward(self, x):
+        """
+        :param x: The input values
+        :return: The output in the interval [-1,1]
+        """
+        z = np.dot(self.w, x)
+        output = 1 if z >= self.threshold else -1
+        return output
+
+    # P.2.3 - Implement a function to randomize the weights and the threshold
+    def set_random_params(self):
+        self.threshold = random.uniform(-1, 1)
+        self.w = random.uniform(-1, 1)
+
+    # P.2.4 - Implement a function to check whether the MCP neuron represents a specific Boolean Function
+    def is_bf(self, bf):
+        for x, y in bf.items():
+            x_array = np.array(x)
+            pred = self.forward(x_array)
+            if y != pred:
+                return False
+        return True
+
+
+# P2.2 - Implement a function that generates sets of random Boolean functions given a dimension.
+def generate_boolean_functions(dim, max_samples=0):
+    """
+    :param dim: The input dimension, i.e., the number of Boolean inputs.
+    :param max_samples: The max. number of functions to return.
+                       This value is bounded by the possible number of functions for a given input dimension.
+                       For example, for dim=2, there can only be 16 Boolean functions.
+    :return: The functions to return as dictionaries, where keys are tuples of inputs and values are outputs.
+    """
+    # Generate all possible input combinations of length `dim`
+    input_combinations = list(product([0, 1], repeat=dim))
+
+    # Number of possible Boolean functions for the given dimension
+    num_functions = 2 ** (2 ** dim)
+
+    # Determine the number of functions to generate
+    if max_samples <= 0 or max_samples > num_functions:
+        max_samples = num_functions
+
+    bf = []
+
+    # Generate random Boolean functions
+    for _ in range(max_samples):
+        # Randomly assign -1 or 1 to each input combination
+        function = {inputs: np.random.choice([-1, 1]) for inputs in input_combinations}
+        bf.append(function)
+
+    return bf
