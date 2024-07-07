@@ -35,6 +35,10 @@ if __name__ == "__main__":
     # and display it with the show_image function.
     # <START Your code here>
 
+    x1 = generate_random_vector(2,True)
+    x1_256 = x1 * 256
+    show_image((x1_256).astype(int), 200)
+
     # <END Your code here>
 
     # P1.5.: Compute the angle between two vectors. Note that you can understand this also as the angle between the two images.
@@ -44,14 +48,25 @@ if __name__ == "__main__":
 
     # Use the compute_angle function to determine the angle between two random 20000 dimensional vectors.
     # Display the vectors as images with <width>=200 and <height>=100
-    ang = 45  # TODO: Overwrite this with the correct angle
+
+    # TODO: Overwrite this with the correct angle
     # <START Your code here>
 
+    x1_20k = generate_random_vector(20000, True)
+    x2_20k = generate_random_vector(20000, True)
+    ang_new = compute_angle(x1_20k, x2_20k)
+
     # <END Your code here>
-    print(f"The angle is {ang}")
+    print(f"The angle is {ang_new}")
 
     # Display the 20000-dimensional vectors as images with <width>=200 and <height>=100. Use the function show_image for this.
     # <START Your code here>
+
+    x1_20k_r = np.reshape(x1_20k*256, (200,100))
+    x2_20k_r = np.reshape(x2_20k*256, (200,100))
+
+    show_image(x1_20k_r.astype(int), 200)
+    show_image(x2_20k_r.astype(int), 200)
 
     # <END Your code here>
 
@@ -64,6 +79,11 @@ if __name__ == "__main__":
     show_image(x2)
     ang = 45  # TODO: Overwrite this with the correct angle
     # <START Your code here>
+
+    flat_x1 = flatten_matrix(x1)
+    flat_x2 = flatten_matrix(x2)
+
+    ang = compute_angle(flat_x1, flat_x2)
 
     # <END Your code here>
     print(f"The angle between the cat and the dog is {ang} deg.")

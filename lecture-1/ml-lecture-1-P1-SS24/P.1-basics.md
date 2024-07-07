@@ -10,28 +10,28 @@ For most functions, there exists a condition whether to use numpy. If this condi
 If all your implementations are correct, you will be able to run the script `2d2nd.py`
 
 
-## P1.1: Implement an n-dimensional random vector generator (2P)
+## P1.1: Implement an n-dimensional random vector generator (2P) ✓
 implement a function that generates a vector with random values in the interval [0,1], i.e., complete the code for the function [generate_random_vector](helper_functions.py)
 
 
-## P1.2: Write a function to compute the magnitude of a vector (2P). 
+## P1.2: Write a function to compute the magnitude of a vector (2P). ✓
 Implement a function that computes the magnitude of a vector, i.e., complete the code for the function [mag](helper_functions.py).
 
 For the first version, use  just Python built-in operations and the `math` package. For the second version, use ``np.linalg.norm``.
 Compare if both versions compute the same result for 10 pairs of n-dimensional vectors generated with the `generate_random_vector` function implemented earlier. 
 
-## P1.3: Inner product of two vectors. (3P)
+## P1.3: Inner product of two vectors. (3P) ✓
 Implement a function to compute the inner product of two n-dimensional vectors, i.e., complete the code for the function [inner_product](helper_functions.py).
 
-## P1.4: Vectors as images (3P)
+## P1.4: Vectors as images (3P) ✓
 Display 2D vectors as images with two pixels, as described in [2d2nd.py](2d2nd.py).
 
-## Ex. 1.5: Angle between two vectors (7P).
+## Ex. 1.5: Angle between two vectors (7P). ✓
 Implement a function to compute the angle between two n-dimensional vectors, i.e, complete the code for the [compute_angle](helper_functions.py) function. Use the definition of the inner product for this purpose, and use the `inner_product` function you implemented earlier.
 Furthermore, use the `compute_angle` function to compute the angle between high-dimensional random vectors, as described in [2d2nd.py](2d2nd.py)
 In addition, display the random vectors as images. 
 
-## Ex. 1.6: The angle between cats and dogs (2P). 
+## Ex. 1.6: The angle between cats and dogs (2P).  ✓
 Compute the angle between the image of a cat and the image of a dog, as described in [2d2nd.py](2d2nd.py)
 
 

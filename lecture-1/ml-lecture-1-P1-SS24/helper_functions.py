@@ -18,13 +18,14 @@ def generate_random_vector(dim=2, use_numpy=False):
     """
     rnd_vec = [0] * dim # TODO: Overwrite this with your implementation.
     if not use_numpy:
-        # <START Your code here>
-        print()
-        # <END Your code here>
+        
+        for i in range(0,dim):
+
+            rnd_vec[i] = random.random()
+
     else:
-        # <START Your code here>
-        print()
-        # <END Your code here>
+        
+        rnd_vec = np.random.rand(dim)
 
     return rnd_vec
 
@@ -47,16 +48,18 @@ def inner_prod(x1, x2, use_numpy=False):
     :param x2: second vector
     :return: the inner product
     """
-    # assert len(x1) == len(x2), "Error, cannot compute the inner product because the vector lengths are not equal"
+    # assert len(x1) == len(x2), "Error, cannot compute the inner product because the vector lengths are not equal" #TBC later if hv time
     p = 0 # TODO: Overwrite this value with your implementation
     if not use_numpy:
-        # <START Your code here>
-        print()
-        # <END Your code here>
+        sum = 0
+        for i in range(0, len(x1)):
+            sum += x1[i]* x2[i]
+
+        p = sum
+
     else:
-        # <START Your code here>
-        print()
-        # <END Your code here>
+        
+        p = np.inner(x1,x2)
 
     return p
 
@@ -70,14 +73,19 @@ def mag(x, use_numpy=False):
     """
     m = 0 # TODO: Overwrite this value with your implementation
     if use_numpy is False:
-        # <START Your code here>
-        print()
-        # <END Your code here>
+        sum = 0
+
+        for i in range(0, len(x)):
+            sum += (x[i])**2
+
+        m = math.sqrt(sum)
+
     else:
-        # <START Your code here>
-        print()
-        # <END Your code here>
+        
+        m = np.linalg.norm(x)
+
     return m
+
 
 
 # Helper function to determine the radius of a set of points
@@ -183,15 +191,23 @@ def load_image(filename="cat.jpg", scale_to_size=None, grayscale=True):
         image = image.resize(scale_to_size)
     if grayscale:
         image = ImageOps.grayscale(image)
-    data = np.asarray(image, dtype=np.float)
+    data = np.asarray(image, dtype=float)
     return data
 
 
 def show_image(numpy_image, scale_to_width=200):
-    image = Image.fromarray(numpy_image)
+    image = Image.fromarray((numpy_image * 255).astype(np.uint8))
+    # image = Image.fromarray(numpy_image)
     scale_factor = scale_to_width / image.size[0]
     image = ImageOps.scale(image, scale_factor, resample=Image.BOX)
     image.show()
+
+# x1 = generate_random_vector(10, True)
+# x1_256 = x1*256
+# show_image(x1_256.astype(int),200)
+
+# a = np.random.rand(2)
+# show_image(a, 200)
 
 
 def compute_angle(x1, x2):
@@ -201,8 +217,36 @@ def compute_angle(x1, x2):
     :param x2: the second vector
     :return: the angle in degrees
     """
-    ang = 45 # TODO: overwrite this value with your implementation
+    # ang = 45 # TODO: overwrite this value with your implementation
     # <START Your code here>
+
+    x1_x2 = inner_prod(x1,x2)
+
+    ang = math.acos(x1_x2 / (mag(x1) * mag(x2)))
 
     # <END Your code here>
     return ang
+
+# a = generate_random_vector(2,True)
+# print("a: ", a, "\n")
+# b = generate_random_vector(2,True)
+# print("b: ", b, "\n")
+# print("angle: ", compute_angle(a,b))
+
+# x1_20k = generate_random_vector(20000, True)
+# x2_20k = generate_random_vector(20000, True)
+
+# x1_20k_r = np.reshape(x1_20k*256, (200,100))
+# x2_20k_r = np.reshape(x2_20k*256, (200,100))
+
+# show_image(x1_20k_r.astype(int), 200)
+# show_image(x2_20k_r.astype(int), 200)
+
+x1 = load_image(filename="cat.jpg", scale_to_size=(100, 100))
+x2 = load_image(filename="dog.jpg", scale_to_size=(100, 100))
+show_image(x1)
+show_image(x2)
+
+x1f = flatten_matrix(x1)
+x2f = flatten_matrix(x2)
+print('angle', compute_angle(x1f,x2f))
