@@ -28,7 +28,7 @@ def function_1(x):
     # <START Your code here>
     y = sigmoid(x)
     # <END Your code here>
-    return y
+    return np.array([y])
 
 
 def function_2(x):
@@ -36,7 +36,7 @@ def function_2(x):
     # <START Your code here>
     y = np.sin(x)
     # <END Your code here>
-    return y
+    return np.array([y])
 
 
 
@@ -45,7 +45,7 @@ def function_3(x):
     # <START Your code here>
     y = function_1(x) + function_2(x)
     # <END Your code here>
-    return y
+    return np.array([y])
 
 # print(function_3(a))
 
@@ -57,7 +57,7 @@ def function_4(x):
     y = ((x/6)**2) - ((x/8)**2)
     
     # <END Your code here>
-    return y
+    return np.array([y])
 
 # print(function_4(a))
 
@@ -67,7 +67,7 @@ def function_5(x):
     # <START Your code here>
     y = function_2(x) * np.sqrt(x)
     # <END Your code here>
-    return y
+    return np.array([y])
 
 # print(function_5(a))
 
@@ -141,7 +141,7 @@ class ContinuousNeuron:
             x_steps = (x_end - x_start) / (n_train_datapoints)
             sum_error = 0
             for x in np.arange(x_start,x_end,x_steps):
-                y_approx = self.forward(x)
+                y_approx = self.forward([x])
                 y_orig = func(x)
                 step_error = (y_approx - y_orig) ** 2
                 sum_error += step_error
@@ -246,7 +246,7 @@ class ContinuousNetwork:
             x_steps = (x_end - x_start) / (n_train_datapoints)
             sum_error = 0
             for x in np.arange(x_start,x_end,x_steps):
-                y_approx = self.forward(x)
+                y_approx = self.forward([x])
                 y_orig = func(x)
                 step_error = (y_approx - y_orig) ** 2
                 sum_error += step_error
