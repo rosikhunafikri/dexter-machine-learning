@@ -45,7 +45,7 @@ class MCPNetwork:
   
 
         for i in range(len(self.hidden_units)):
-            f_j.append(self.hidden_units[i])
+            f_j.append(self.hidden_units[i].forward(x))
 
         #inner_prod already has looping-feature inside
            
@@ -60,16 +60,28 @@ class MCPNetwork:
 
     # Implement a function to randomize the weights and the threshold
     def set_random_params(self):
+
         # <START Your code here>
 
+        #randomize for output weights and thresholds
+        self.weight = np.random.uniform(-1,1,len(self.w))
+        self.threshold = np.random.uniform(-1,1)
+
+        for units in self.hidden_units:
+            units.set_random_params()
+
         # <END Your code here>
-        return
 
     # Implement a function to check whether the MCP neuron represents a specific Boolean Function
     def is_bf(self, bf):
         fail = False
         # <START Your code here>
-
+        for x in bf.keys():
+            y = bf[x]
+            pred = self.forward(x)
+            if y != pred:
+                fail = True
+                break
         # <END Your code here>
         return not fail
 
