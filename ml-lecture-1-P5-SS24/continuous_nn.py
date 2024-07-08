@@ -131,9 +131,25 @@ class ContinuousNeuron:
         :param n_train_datapoints: Number of datapoints in the interval
         :return: The L2-error for the best parameters
         """
-        best_params_err = 0  # TODO: Overwrite the 0
+        # TODO: Overwrite the 0
         # <START Your code here>
+        best_err = np.inf
+        best_params_err = self.get_params()
+        
+        for i in range(n_updates):
+            self.set_random_params(magnitude)
+            x_steps = (x_end - x_start) / (n_train_datapoints)
+            sum_error = 0
+            for x in np.arange(x_start,x_end,x_steps):
+                y_approx = self.forward(x)
+                y_orig = func(x)
+                step_error = (y_approx - y_orig) ** 2
+                sum_error += step_error
 
+            if(sum_error < best_err):
+                best_err = sum_error
+                best_params_err.get_params()
+                
         # <END Your code here>
         return best_params_err
 
@@ -143,7 +159,7 @@ class ContinuousNeuron:
 
 
 ###############################
-# P5.2 - A continuous network #
+# P5.3 - A continuous network #
 ###############################
 class ContinuousNetwork:
     def __init__(self, n_inputs, n_hidden, w=None, threshold=0):
@@ -171,8 +187,22 @@ class ContinuousNetwork:
         y = 0 # TODO: Replace y with the actual forward pass values
         # <START Your code here>
 
-        # <END Your code here>
+        f_j = []
+  
+
+        for i in range(len(self.hidden)):
+            f_j.append(self.hidden[i].forward(x))
+
+        #inner_prod already has looping-feature inside
+           
+        weighted_sum = inner_prod(self.w, f_j, use_numpy=True) - self.threshold
+
+        y = sigmoid(weighted_sum) #we use sigmoid since continuous
+
         return y
+
+        # <END Your code here>
+
 
     def set_random_params(self, magnitude=1.0):
         """
@@ -180,6 +210,11 @@ class ContinuousNetwork:
         :return:
         """
         # <START Your code here>
+        self.weight = np.random.uniform(-magnitude,magnitude,len(self.w))
+        self.threshold = np.random.uniform(-magnitude,magnitude)
+
+        for units in self.hidden:
+            units.set_random_params(magnitude)
 
         # <END Your code here>
 
@@ -203,9 +238,23 @@ class ContinuousNetwork:
         :param n_train_datapoints: Number of datapoints in the interval
         :return: The L2-error for the best parameters
         """
-        best_params_err = 0 # TODO: Overwrite the 0
-        # <START Your code here>
+        best_err = np.inf
+        best_params_err = self.get_params()
+        
+        for i in range(n_updates):
+            self.set_random_params(magnitude)
+            x_steps = (x_end - x_start) / (n_train_datapoints)
+            sum_error = 0
+            for x in np.arange(x_start,x_end,x_steps):
+                y_approx = self.forward(x)
+                y_orig = func(x)
+                step_error = (y_approx - y_orig) ** 2
+                sum_error += step_error
 
+            if(sum_error < best_err):
+                best_err = sum_error
+                best_params_err.get_params()
+                
         # <END Your code here>
         return best_params_err
 
