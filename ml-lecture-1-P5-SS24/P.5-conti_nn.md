@@ -1,5 +1,5 @@
 
-## P5.1 - Implement the following testing functions to approximate as Python functions (2.5P)
+## P5.1 - Implement the following testing functions to approximate as Python functions (2.5P) ✓
 1. <img src="https://latex.codecogs.com/svg.latex?f_1 = \sigma(x)">
    (This is trivial, the function is already in the code.)
 2. <img src="https://latex.codecogs.com/svg.latex?f_2 = sin(x)">
