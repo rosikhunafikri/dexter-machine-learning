@@ -40,8 +40,8 @@ class MCPNeuron:
     # P.2.3 - Implement a function to randomize the weights and the threshold
     def set_random_params(self):
         # <START Your code here>
-        self.threshold = np.random.uniform(-1,1,self.w)
-        self.weight = np.random.uniform(-1,1)
+        self.weight = np.random.uniform(-1,1,len(self.w))
+        self.threshold = np.random.uniform(-1,1)
         # TODO: remove
         # <END Your code here>
 
@@ -155,7 +155,7 @@ if __name__ == '__main__':
     succ_rates_lecture = [1, 0.88, 0.5, 0.06][:len(n_inputs_to_test)]
     # <START Your Code Here>
 
-    one = 
+    
 
 
 
