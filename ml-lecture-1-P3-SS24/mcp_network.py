@@ -99,14 +99,28 @@ if __name__ == '__main__':
     #  with a MCP network.
     succ_rates = {n_inputs: {n_hidden: np.nan for n_hidden in n_hidden_to_test} for n_inputs in n_inputs_to_test}
     avg_guesses = {n_inputs: {n_hidden: np.nan for n_hidden in n_hidden_to_test} for n_inputs in n_inputs_to_test}
+
+    print(succ_rates)
+    print(avg_guesses)
     max_samples_to_test = 200
     max_guesses = 150000
+
     os.makedirs('mcp_data', exist_ok=True)
 
     data = {}
     for n_inputs in n_inputs_to_test:
         # <START Your Code Here>
+        bfs = generate_boolean_functions(n_inputs, max_samples_to_test)
+        for n_hidden in n_hidden_to_test:
+            mcp_network = MCPNetwork(n_inputs, n_hidden)
 
+            succ_count = 0
+            for i in range(max_guesses):
+                mcp_network.set_random_params()
+                for bf in bfs:
+                    if mcp_network.is_bf():
+                        succ_count += 1
+        # TODO: CONTINUE HERE
         # <END Your Code Here>
 
         # Dump data as json
