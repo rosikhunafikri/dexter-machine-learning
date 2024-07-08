@@ -6,7 +6,7 @@ Second, you will implement the perceptron learning algorithm for a single percep
 
 For this exercise, you will complete the code in [mcp_network.py](mcp_network.py) and [perceptron.py](perceptron.py). Please make sure that you use the Python files and functions provided in this package and not your own Python implementation from the previous exercise. In particular, make sure that you do not use your own file `mcp.py`, but the one provided here. It may also work with your solution, but we cannot guarantee it.   
 
-## P3.1: Implement a McCulloch-Pitts network and test its universal representation abilities (11P - split)
+## P3.1: Implement a McCulloch-Pitts network and test its universal representation abilities (11P - split) 
 In the lecture you learned that a 2-layered network of MCPNeurons can potentially represent all Boolean functions if it contains enough hidden neurons. In this exercise, you will empirically research the relation between the number of hidden units and the number of Boolean functions that a MCP-network can approximate. 
 1. Use the class MCPNeuron from the last exercise to implement the constructor (`__init__`) and the `forward` function for the class `MCPNetwork` in [mcp_network.py](mcp_network.py) (3P).
 2. Similar to P2.3, fill the function  [set_random_params](mcp_network.py) In the class `MCPNetwork`, add a function to randomly set the weights and thresholds of the whole network (2P). 

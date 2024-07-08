@@ -28,8 +28,12 @@ class MCPNetwork:
         # Add the hidden units
         # Create a list of hidden MCP units according to n_inputs and n_hidden.
 
+        self.hidden_units = []
+
+        for i in range(n_hidden):
+            self.hidden_units.append(MCPNeuron(n_inputs))
+
         # <END Your code here>
-        return
 
     def forward(self, x):
         """
@@ -37,6 +41,20 @@ class MCPNetwork:
         :return: The output in the interval [-1,1]
         """
         # <START Your code here>
+        f_j = []
+  
+
+        for i in range(len(self.hidden_units)):
+            f_j.append(self.hidden_units[i])
+
+        #inner_prod already has looping-feature inside
+           
+        weighted_sum = inner_prod(self.w, f_j, use_numpy=True) - self.threshold
+        y = np.sign(weighted_sum)
+        if y == 0:
+            y = 1
+        return y
+            
 
         # <END Your code here>
 
