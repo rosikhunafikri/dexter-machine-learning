@@ -9,55 +9,67 @@ import copy
 import matplotlib.pyplot as plt
 from tqdm import tqdm
 from conti_nn_util import MagicPytorchContiNN
-import torch.optim as optim
+# import torch.optim as optim
 
 
 def sigmoid(x):
     z = 1 / (1 + np.exp(-x))
     return z
 
+a = np.array([1,2,3,4])
+# print(sigmoid(a))
+
 
 ########################################
 # P5.1 - Implement 5 example functions #
 ########################################
 def function_1(x):
-    y = 0 # TODO: Overwrite y appropriately
+    # TODO: Overwrite y appropriately
     # <START Your code here>
-
+    y = sigmoid(x)
     # <END Your code here>
-    return np.array([y])
+    return y
 
 
 def function_2(x):
-    y = 0  # TODO: Overwrite y appropriately
+    # TODO: Overwrite y appropriately
     # <START Your code here>
-
+    y = np.sin(x)
     # <END Your code here>
-    return np.array([y])
+    return y
+
 
 
 def function_3(x):
-    y = 0  # TODO: Overwrite y appropriately
+    # TODO: Overwrite y appropriately
     # <START Your code here>
-
+    y = function_1(x) + function_2(x)
     # <END Your code here>
-    return np.array([y])
+    return y
+
+# print(function_3(a))
 
 
 def function_4(x):
-    y = 0  # TODO: Overwrite y appropriately
+    # TODO: Overwrite y appropriately
     # <START Your code here>
 
+    y = ((x/6)**2) - ((x/8)**2)
+    
     # <END Your code here>
-    return np.array([y])
+    return y
+
+# print(function_4(a))
 
 
 def function_5(x):
-    y = 0  # TODO: Overwrite y appropriately
+    # TODO: Overwrite y appropriately
     # <START Your code here>
-
+    y = function_2(x) * np.sqrt(x)
     # <END Your code here>
-    return np.array([y])
+    return y
+
+# print(function_5(a))
 
 
 ##############################
@@ -231,92 +243,92 @@ def eval_approximator(func, function_approximator, x_start, x_end, n_eval_steps,
     return err
 
 
-if __name__ == '__main__':
-    # Code for P5.2 - P5.3
-    n_updates = 500
-    n_eval_steps = 100
-    n_train_datapoints = n_eval_steps
-    x_start = - 4 * math.pi
-    x_end = 4 * math.pi
-    fpath = 'conti_nn_data'
-    os.makedirs(fpath, exist_ok=True)
-    functions = [function_1, function_2, function_3, function_4, function_5]
-    approximatorClassesArgs = []
-    approximatorClassesArgs.append([ContinuousNeuron, 1])
+# if __name__ == '__main__':
+#     # Code for P5.2 - P5.3
+#     n_updates = 500
+#     n_eval_steps = 100
+#     n_train_datapoints = n_eval_steps
+#     x_start = - 4 * math.pi
+#     x_end = 4 * math.pi
+#     fpath = 'conti_nn_data'
+#     os.makedirs(fpath, exist_ok=True)
+#     functions = [function_1, function_2, function_3, function_4, function_5]
+#     approximatorClassesArgs = []
+#     approximatorClassesArgs.append([ContinuousNeuron, 1])
 
-    for n_hidden in [1, 2, 4, 8, 16]: # If your machine is too slow, feel free to remove the larger values.
-        approximatorClassesArgs.append([ContinuousNetwork, 1, n_hidden])
-        approximatorClassesArgs.append([MagicPytorchContiNN, 1, n_hidden])
-        pass
-    for func in functions:
-        print(f"approximating function {func.__name__}")
-        best_err = np.inf
-        for approxClassArg in approximatorClassesArgs:
-            approx = approxClassArg[0](*tuple(approxClassArg[1:]))
-            print(f"using approximator  {approx.__name__}")
-            fname = f'{str(approx.__name__)}_{str(func.__name__)}.png'
-            # if os.path.exists(os.path.join(fpath,fname)):
-            #     continue
-            approx.fit(func, n_updates, x_start, x_end, n_train_datapoints)
-            err = eval_approximator(func, approx, x_start, x_end, n_eval_steps, figure_path=fpath, figure_filename=fname)
-            if err < best_err:
-                print(f"The approximator {str(approx.__name__)} ist the best so far for function {str(func.__name__)}, with the evaluation error: {err}.")
-                best_err = err
-                err = eval_approximator(func, approx, x_start, x_end, n_eval_steps, figure_path=fpath,
-                                        figure_filename=f"best_{str(func.__name__)}.png")
+#     for n_hidden in [1, 2, 4, 8, 16]: # If your machine is too slow, feel free to remove the larger values.
+#         approximatorClassesArgs.append([ContinuousNetwork, 1, n_hidden])
+#         approximatorClassesArgs.append([MagicPytorchContiNN, 1, n_hidden])
+#         pass
+#     for func in functions:
+#         print(f"approximating function {func.__name__}")
+#         best_err = np.inf
+#         for approxClassArg in approximatorClassesArgs:
+#             approx = approxClassArg[0](*tuple(approxClassArg[1:]))
+#             print(f"using approximator  {approx.__name__}")
+#             fname = f'{str(approx.__name__)}_{str(func.__name__)}.png'
+#             # if os.path.exists(os.path.join(fpath,fname)):
+#             #     continue
+#             approx.fit(func, n_updates, x_start, x_end, n_train_datapoints)
+#             err = eval_approximator(func, approx, x_start, x_end, n_eval_steps, figure_path=fpath, figure_filename=fname)
+#             if err < best_err:
+#                 print(f"The approximator {str(approx.__name__)} ist the best so far for function {str(func.__name__)}, with the evaluation error: {err}.")
+#                 best_err = err
+#                 err = eval_approximator(func, approx, x_start, x_end, n_eval_steps, figure_path=fpath,
+#                                         figure_filename=f"best_{str(func.__name__)}.png")
 
-    # Code for P5.4
-    x_start = 0
-    x_end = 2 * math.pi
+#     # Code for P5.4
+#     x_start = 0
+#     x_end = 2 * math.pi
 
-    ##################################################
-    ### Approximating sin(x) with a single neuron ###
-    ##################################################
+#     ##################################################
+#     ### Approximating sin(x) with a single neuron ###
+#     ##################################################
 
-    # Learn the sin function again with a single neuron
-    guessing_neuron = ContinuousNeuron(1)
-    guessing_neuron.fit(function_2, n_updates, x_start, x_end, n_train_datapoints)
-    fname = f'guessing_sin_neuron.png'
-    err = eval_approximator(function_2, guessing_neuron, x_start, x_end, n_eval_steps, figure_path=fpath,
-                            figure_filename=fname)
-    # print(f"The error for a single learned neuron to approximate the sin function is {err}")
+#     # Learn the sin function again with a single neuron
+#     guessing_neuron = ContinuousNeuron(1)
+#     guessing_neuron.fit(function_2, n_updates, x_start, x_end, n_train_datapoints)
+#     fname = f'guessing_sin_neuron.png'
+#     err = eval_approximator(function_2, guessing_neuron, x_start, x_end, n_eval_steps, figure_path=fpath,
+#                             figure_filename=fname)
+#     # print(f"The error for a single learned neuron to approximate the sin function is {err}")
 
 
-    manual_neuron = ContinuousNeuron(1)
-    # <START Your code: Assign appropriate values to the weight and threshold (replace the 0s)>
+#     manual_neuron = ContinuousNeuron(1)
+#     # <START Your code: Assign appropriate values to the weight and threshold (replace the 0s)>
 
-    # <END Your code>
-    fname = f'manual_sin_neuron.png'
-    err = eval_approximator(function_2, manual_neuron, x_start, x_end, n_eval_steps, figure_path=fpath, figure_filename=fname)
-    print(f"The error for a single manually defined neuron to approximate the sin function is {err}")
+#     # <END Your code>
+#     fname = f'manual_sin_neuron.png'
+#     err = eval_approximator(function_2, manual_neuron, x_start, x_end, n_eval_steps, figure_path=fpath, figure_filename=fname)
+#     print(f"The error for a single manually defined neuron to approximate the sin function is {err}")
 
-    ########################################################################
-    ### Approximating sin(x) with a network with a single hidden neuron ###
-    ########################################################################
-    # Learn the sin function again by guessing with a network that has a single hidden unit
-    guessing_network_1 = ContinuousNetwork(1,1)
-    guessing_network_1.fit(function_2, n_updates, x_start, x_end, n_train_datapoints)
-    fname = f'guessing_sin_network_1.png'
-    err = eval_approximator(function_2, guessing_network_1, x_start, x_end, n_eval_steps, figure_path=fpath,
-                            figure_filename=fname)
-    print(f"The error for a randomly guessed network with a single hidden unit is {err}")
+#     ########################################################################
+#     ### Approximating sin(x) with a network with a single hidden neuron ###
+#     ########################################################################
+#     # Learn the sin function again by guessing with a network that has a single hidden unit
+#     guessing_network_1 = ContinuousNetwork(1,1)
+#     guessing_network_1.fit(function_2, n_updates, x_start, x_end, n_train_datapoints)
+#     fname = f'guessing_sin_network_1.png'
+#     err = eval_approximator(function_2, guessing_network_1, x_start, x_end, n_eval_steps, figure_path=fpath,
+#                             figure_filename=fname)
+#     print(f"The error for a randomly guessed network with a single hidden unit is {err}")
 
-    # Learn the sin function again by gradient descent with a network that has a single hidden unit
-    sgd_network_1 = MagicPytorchContiNN(1, 1)
-    sgd_network_1.fit(function_2, n_updates, x_start, x_end, n_train_datapoints)
-    fname = f'sgd_sin_network_1.png'
-    err = eval_approximator(function_2, sgd_network_1, x_start, x_end, n_eval_steps, figure_path=fpath,
-                            figure_filename=fname)
-    print(f"The error for a sgd-learned network with a single hidden unit is {err}")
+#     # Learn the sin function again by gradient descent with a network that has a single hidden unit
+#     sgd_network_1 = MagicPytorchContiNN(1, 1)
+#     sgd_network_1.fit(function_2, n_updates, x_start, x_end, n_train_datapoints)
+#     fname = f'sgd_sin_network_1.png'
+#     err = eval_approximator(function_2, sgd_network_1, x_start, x_end, n_eval_steps, figure_path=fpath,
+#                             figure_filename=fname)
+#     print(f"The error for a sgd-learned network with a single hidden unit is {err}")
 
-    manual_network_1 = ContinuousNetwork(1,1)
-    # <START Your code: Assign appropriate values to the weights and thresholds (replace the 0s)>
+#     manual_network_1 = ContinuousNetwork(1,1)
+#     # <START Your code: Assign appropriate values to the weights and thresholds (replace the 0s)>
 
-    # <END Your code>
-    fname = f'manual_sin_network_1.png'
-    err = eval_approximator(function_2, manual_network_1, x_start, x_end, n_eval_steps, figure_path=fpath,
-                            figure_filename=fname)
-    print(f"The error for a manually defined network with a single unit in the hidden layer to approximate the sin function is {err}")
-    print("Done")
+#     # <END Your code>
+#     fname = f'manual_sin_network_1.png'
+#     err = eval_approximator(function_2, manual_network_1, x_start, x_end, n_eval_steps, figure_path=fpath,
+#                             figure_filename=fname)
+#     print(f"The error for a manually defined network with a single unit in the hidden layer to approximate the sin function is {err}")
+#     print("Done")
 
 
