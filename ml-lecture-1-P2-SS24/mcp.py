@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 from sklearn import datasets
 import time
 import random
+import itertools
 from numpy.random import default_rng
 from tqdm import tqdm
 from collections import OrderedDict
@@ -27,14 +28,25 @@ class MCPNeuron:
         """
         # <START Your code here>
 
+        y = np.sign(inner_prod(self.w,x) - self.threshold)
+
+        if (y == 0):
+            return 1
+
+
         # <END Your code here>
-        return 0 # TODO: Overwrite this with your code
+        return y # TODO: Overwrite this with your code
 
     # P.2.3 - Implement a function to randomize the weights and the threshold
     def set_random_params(self):
         # <START Your code here>
-        pass # TODO: remove
+        self.threshold = np.random.uniform(-1,1,self.w)
+        self.weight = np.random.uniform(-1,1)
+        # TODO: remove
         # <END Your code here>
+
+
+        
 
 
     # P.2.4 - Implement a function to check whether the MCP neuron represents a specific Boolean Function
@@ -58,7 +70,25 @@ def generate_boolean_functions(dim, max_samples=0):
     For example, for dim=2, there can only be 16 Boolean functions.
     :return: The functions to return as dictionaries, where keys are tuples of inputs and values are outputs.
     """
+    input_combos = list(itertools.product([-1,1], dim))
+
+    input_functions_limit = 2 ** (2 ** dim)
+
+    if max_samples <= 0 or max_samples > input_combos:
+        max_samples = input_functions_limit
+
     bf = []
+
+    for _ in range(max_samples): #iterate to find many different permutations of output
+
+        function = {} #initialize dictionary called function
+
+        for input in input_combos:
+            output = np.random.choice(-1,1)
+            function[input] = output
+
+        bf.append(function)
+    
     # <START Your Code Here>
 
     # <END Your Code Here>
@@ -69,17 +99,23 @@ if __name__ == '__main__':
     mcp_1 = MCPNeuron(1)
     mcp_1.w = np.array([1])
     mcp_1.threshold = 1
-    mcp_1.forward([-1])
+
+    print("MCP_1: \n")
+    print(mcp_1.forward([1]))
+
+
 
     mcp_2 = MCPNeuron(2)
     mcp_2.w = np.array([1, 1])
     mcp_2.threshold = 1
-    mcp_2.forward([-1, 1])
+    print("MCP_2: \n")
+    print(mcp_2.forward([-1, 1]))
 
     mcp_3 = MCPNeuron(3)
     mcp_3.w = np.array([1, 1, 1])
     mcp_3.threshold = 1
-    mcp_3.forward([-1, 1, -1])
+    print("MCP_3: \n")
+    print(mcp_3.forward([-1, 1, -1]))
 
     # P.2.4 - Test your is_bf function
     bf_1 = ({(-1, -1): -1, (-1, 1): -1, (1,-1): -1, (1, 1): 1})
@@ -118,6 +154,10 @@ if __name__ == '__main__':
     succ_rates = [0] * len(n_inputs_to_test)
     succ_rates_lecture = [1, 0.88, 0.5, 0.06][:len(n_inputs_to_test)]
     # <START Your Code Here>
+
+    one = 
+
+
 
     # <END Your Code Here>
 
