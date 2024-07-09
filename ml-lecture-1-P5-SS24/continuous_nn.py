@@ -43,7 +43,8 @@ def function_2(x):
 def function_3(x):
     # TODO: Overwrite y appropriately
     # <START Your code here>
-    y = function_1(x) + function_2(x)
+    # y = sigmoid(x) + sin(x)
+    y = sigmoid(x) + np.sin(x)
     # <END Your code here>
     return np.array([y])
 
@@ -65,7 +66,7 @@ def function_4(x):
 def function_5(x):
     # TODO: Overwrite y appropriately
     # <START Your code here>
-    y = function_2(x) * np.sqrt(x)
+    y = np.sin(x) * np.sqrt(x)
     # <END Your code here>
     return np.array([y])
 
@@ -348,7 +349,8 @@ if __name__ == '__main__':
 
     manual_neuron = ContinuousNeuron(1)
     # <START Your code: Assign appropriate values to the weight and threshold (replace the 0s)>
-
+    manual_neuron.w[0] = -1
+    manual_neuron.threshold = 0
     # <END Your code>
     fname = f'manual_sin_neuron.png'
     err = eval_approximator(function_2, manual_neuron, x_start, x_end, n_eval_steps, figure_path=fpath, figure_filename=fname)
@@ -375,7 +377,10 @@ if __name__ == '__main__':
 
     manual_network_1 = ContinuousNetwork(1,1)
     # <START Your code: Assign appropriate values to the weights and thresholds (replace the 0s)>
-
+    manual_network_1.w[0] = -2
+    manual_network_1.threshold = 1
+    manual_network_1.hidden[0].w[0] = math.pi
+    manual_network_1.hidden[0].threshold = 3 * math.pi
     # <END Your code>
     fname = f'manual_sin_network_1.png'
     err = eval_approximator(function_2, manual_network_1, x_start, x_end, n_eval_steps, figure_path=fpath,
