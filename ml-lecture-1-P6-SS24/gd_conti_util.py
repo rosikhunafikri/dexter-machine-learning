@@ -193,6 +193,8 @@ class FunctionApproximator(ABC):
             x = np.random.uniform(low=x_start, high=x_end, size=(1, 1))
             y = func(x)[0]
             # <START Your code here>
+            self.compute_gradients(x,y)
+            self.update_parameters(this_lr)
             # <END Your code here>
 
             if iteration % plot_every_n_data == 0:
@@ -248,19 +250,21 @@ class ContinuousNeuron(FunctionApproximator):
         Computes the gradients and sets self.dw and self.b
         """
         # TODO: Overwrite self.w and self.dtheta with the actual gradients given as the derivative of the loss function.
-        self.dw = np.zeros_like(self.w)
-        self.dtheta = 0
         # <START Your code here>
+        self.dw = 2 * (y - self.forward(x)) * sigmoid_derivative(x) * x
+        self.dtheta = -2 * (y - self.forward(x)) * sigmoid_derivative(x)
          # <END Your code here>
 
     def update_parameters(self, lr, zero_grad=True):
         """
-        Updates self.w and self.b according to the previously computed gradients self.dw and self.dtheta.
+        Updates self.w and self.theta according to the previously computed gradients self.dw and self.dtheta.
         :param lr: The learning rate
         :param zero_grad: Whether to zero the gradients after the update.
         :return:  nothing
         """
         # <START Your code here>
+        self.w = self.w + (lr * self.dw)
+        self.theta = self.theta + (lr * self.dtheta)
         # <END Your code here>
 
     # Implement a function to randomize the weights and the threshold theta

@@ -277,6 +277,9 @@ def eval_approximator(func, function_approximator, x_start, x_end, n_eval_steps,
 
 if __name__ == '__main__':
     # Code for P5.2 - P5.3
+
+    print("numpy version: ", np.version.version)
+
     n_updates = 500
     n_eval_steps = 100
     n_train_datapoints = n_eval_steps
