@@ -437,8 +437,7 @@ class ContinuousNetwork(FunctionApproximator):
         #hidden layer:
 
         for i in range(len(self.hidden)):
-            for j in range(len(x)):
-                self.hidden[i].w[j] = self.hidden[i].w[j] - (lr * self.hidden[i].dw[j]) 
+            self.hidden[i].w = self.hidden[i].w - (lr * self.hidden[i].dw) 
 
             (self.hidden[i]).theta = (self.hidden[i]).theta + (lr * self.dtheta)
 
@@ -494,12 +493,11 @@ class ContinuousNetwork(FunctionApproximator):
         #to find the weight of hidden_layer, x input must loop since we can have x1w11, x2,w21 ...
         
         for j in range(len(self.hidden)):
-            for i in range(len(x)):
-                self.hidden.dw[i] = delta_h[j] * x[i]
+                self.hidden[j].dw = delta_h[j] * x
 
         #to find the theta for the hidden_layer
         for j in range(len(self.hidden)): 
-            self.hidden.dtheta[j] = delta_h * -1
+            self.hidden[j].dtheta = delta_h * -1
 
         # <END Your code here>
 
