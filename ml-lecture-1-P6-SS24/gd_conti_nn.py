@@ -74,7 +74,7 @@ def perform_approx(func, n_hidden, x_start, x_end, lr, n_epochs, n_datapoints, s
 ####################
 
 FUNCTIONS = [function_0, function_1, function_2, function_3, function_4, function_5, function_6] # Remove some functions if computing all takes too long.
-N_HIDDEN_UNITS = [1, 2, 5, 25, 50, 255] # Remove some values if computing all takes too long.
+N_HIDDEN_UNITS = [1] #[1, 2, 5, 25, 50, 255] # Remove some values if computing all takes too long.
 N_TRAIN_DATAPOINTS = 5000 # Set to a lower value if this takes too long.
 
 # FUNCTIONS = [function_0, function_1, function_2] # Remove some functions if computing all takes too long.

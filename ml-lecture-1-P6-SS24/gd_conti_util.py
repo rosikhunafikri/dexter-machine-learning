@@ -190,8 +190,8 @@ class FunctionApproximator(ABC):
             if min_lr is not None:
                 this_lr = max(this_lr, min_lr)
 
-            x = np.random.uniform(low=x_start, high=x_end, size=(1, 1))
-            y = func(x)[0]
+            x = np.random.uniform(low=x_start, high=x_end)
+            y = func(x)
             # <START Your code here>
             self.compute_gradients(x,y)
             self.update_parameters(this_lr)
