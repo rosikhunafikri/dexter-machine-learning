@@ -351,8 +351,8 @@ class ContinuousNetwork(FunctionApproximator):
         """
         hidden_out = np.array([h.forward(x) for h in self.hidden])
         weighted_sum = np.inner(self.w, hidden_out.T) - self.theta
-        # y = sigmoid(weighted_sum)
-        y = weighted_sum
+        y = sigmoid(weighted_sum)
+        # y = weighted_sum
         return y
 
     def get_mean_weight_gradient(self):
@@ -449,7 +449,37 @@ class ContinuousNetwork(FunctionApproximator):
         # Consider the script, page 60
         # Step 1: Evaluate all o_j, and all sigma'(net_j)
 
+        # o_j = []
+        # sigma_prime = []
+
+        # for i in range(len(self.hidden)):
+        #     o_j.append(self.hidden[i].forward(x))
+        #     sigma_prime.append(o_j[i] * (1 - o_j[i]))
+
+        o_j = []
+        sigmoid_prime = []
+
+        for i in range(self.hidden):
+            o_j.append(self.hidden[i].forward(x))     
+            sigmoid_prime.append(o_j[i] * (1 - o_j[i]))   #cannot use sigmoid_deriv since o_j already has sigmoid inside
+        
+
         # Step 2: Compute \delta_h for all neurons, starting with output layer.
+
+        # delta_output = 2 * (y - self.forward(x)) * (self.forward(x)) * (1 - self.forward(x))
+        # self.dw = delta_output * o_j
+        # self.dtheta = -1 * delta_output 
+
+        # delta.h = []
+
+        delta_o = -2 * (y - self.forward(x)) * sigmoid_prime[0] 
+
+        for i in range(len(self.hidden)):
+            self.dw[i] = delta_o * self.w[i] * sigmoid_prime[i]
+
+        
+
+        self.dtheta = -1 * delta_o
 
         # Step 3: Adjust weights. Here: set self.dw and self.hidden[].dw
 
