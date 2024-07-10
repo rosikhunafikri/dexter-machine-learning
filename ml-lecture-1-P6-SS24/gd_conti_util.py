@@ -466,7 +466,7 @@ class ContinuousNetwork(FunctionApproximator):
         o_j = []
         sigmoid_prime = []
 
-        for i in range(self.hidden):
+        for i in range(len(self.hidden)):
             o_j.append(self.hidden[i].forward(x))     
             sigmoid_prime.append(o_j[i] * (1 - o_j[i]))   #cannot use sigmoid_deriv since o_j already has sigmoid inside
         
@@ -493,12 +493,12 @@ class ContinuousNetwork(FunctionApproximator):
 
         #to find the weight of hidden_layer, x input must loop since we can have x1w11, x2,w21 ...
         
-        for j in range(self.hidden):
+        for j in range(len(self.hidden)):
             for i in range(len(x)):
                 self.hidden.dw[i] = delta_h[j] * x[i]
 
         #to find the theta for the hidden_layer
-        for j in range(self.hidden): 
+        for j in range(len(self.hidden)): 
             self.hidden.dtheta[j] = delta_h * -1
 
         # <END Your code here>
