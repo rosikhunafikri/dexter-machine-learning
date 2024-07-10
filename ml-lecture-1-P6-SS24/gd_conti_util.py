@@ -430,6 +430,19 @@ class ContinuousNetwork(FunctionApproximator):
         """
         # <START Your code here>
 
+        #output layer:
+        self.w = self.w - (lr * (self.dw))
+        self.theta = self.theta + (lr * self.dtheta)
+
+        #hidden layer:
+
+        for i in range(len(self.hidden)):
+            for j in range(len(x)):
+                self.hidden[i].w[j] = self.hidden[i].w[j] - (lr * self.hidden[i].dw[j]) 
+
+            (self.hidden[i]).theta = (self.hidden[i]).theta + (lr * self.dtheta)
+
+
         # <END Your code here>
 
     def compute_gradients(self, x, y):
@@ -449,12 +462,6 @@ class ContinuousNetwork(FunctionApproximator):
         # Consider the script, page 60
         # Step 1: Evaluate all o_j, and all sigma'(net_j)
 
-        # o_j = []
-        # sigma_prime = []
-
-        # for i in range(len(self.hidden)):
-        #     o_j.append(self.hidden[i].forward(x))
-        #     sigma_prime.append(o_j[i] * (1 - o_j[i]))
 
         o_j = []
         sigmoid_prime = []
@@ -466,22 +473,33 @@ class ContinuousNetwork(FunctionApproximator):
 
         # Step 2: Compute \delta_h for all neurons, starting with output layer.
 
-        # delta_output = 2 * (y - self.forward(x)) * (self.forward(x)) * (1 - self.forward(x))
-        # self.dw = delta_output * o_j
-        # self.dtheta = -1 * delta_output 
 
-        # delta.h = []
-
+        # delta_o and output layer:
         delta_o = -2 * (y - self.forward(x)) * sigmoid_prime[0] 
 
+        #to find delta_h ; d_!,d_2
+        delta_h = []
+
         for i in range(len(self.hidden)):
-            self.dw[i] = delta_o * self.w[i] * sigmoid_prime[i]
+            delta_h.append(self.w[i] * delta_o * sigmoid_prime[i])
 
-        
-
-        self.dtheta = -1 * delta_o
+   
 
         # Step 3: Adjust weights. Here: set self.dw and self.hidden[].dw
+
+        #for our output layer
+        self.dw = delta_o * o_j
+        self.dtheta = -1 * delta_o
+
+        #to find the weight of hidden_layer, x input must loop since we can have x1w11, x2,w21 ...
+        
+        for j in range(self.hidden):
+            for i in range(len(x)):
+                self.hidden.dw[i] = delta_h[j] * x[i]
+
+        #to find the theta for the hidden_layer
+        for j in range(self.hidden): 
+            self.hidden.dtheta[j] = delta_h * -1
 
         # <END Your code here>
 
